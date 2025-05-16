@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { handleHttp } from "../utils/error.handle"
-import { insertItem } from "../services/item"
+import { insertItem ,listItems } from "../services/item"
 
 const getItem = (req: Request, res: Response) => {
     try {
@@ -12,7 +12,13 @@ const getItem = (req: Request, res: Response) => {
 
 }
 
-const getItems = (req: Request, res: Response) => {
+const getItems =  async (req: Request, res: Response) => {
+    try{
+        const responseItem = await listItems()
+        res.send(responseItem)
+    }catch{
+
+    }
 
 }
 
@@ -21,7 +27,7 @@ const postItem = async ({ body }: Request, res: Response) => {
         const responseItem = await insertItem(body)
         res.send(responseItem);
     } catch (e) {
-        handleHttp(res, "error al crear")
+        handleHttp(res, "error al crear", e)
 
     }
 }
