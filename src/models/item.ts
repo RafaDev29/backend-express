@@ -1,6 +1,7 @@
 import { Schema, Types, model, Model } from "mongoose"
+import { Car } from "../interface/car.interface";
 
-const ItemSchema = new Schema(
+const ItemSchema = new Schema<Car>(
     {
        color : { 
         type : String,
@@ -28,4 +29,4 @@ const ItemSchema = new Schema(
 
 const ItemModel = model( "items" , ItemSchema)
 
-export default { ItemModel};
+export default ItemModel;
