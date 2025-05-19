@@ -1,30 +1,31 @@
 import { Request, Response } from "express"
 import { handleHttp } from "../utils/error.handle"
-import { insertItem ,listItems } from "../services/item"
+import { deleteCar, getCars, insertCar , getCar } from "../services/item"
 
-const getItem = (req: Request, res: Response) => {
-    try {
-
-
+const getItem = async ({params}: Request, res: Response) => {
+    const {id} = params
+   try {
+        const response= await getCar(id)
+        res.send(response)
     } catch (e) {
-        handleHttp(res, 'error items')
+        handleHttp(res, "error al crear", e)
     }
 
 }
 
-const getItems =  async (req: Request, res: Response) => {
-    try{
-        const responseItem = await listItems()
+const getItems = async (req: Request, res: Response) => {
+    try {
+        const responseItem = await getCars()
         res.send(responseItem)
-    }catch{
-
+    } catch (e) {
+        handleHttp(res, "error al crear", e)
     }
 
 }
 
 const postItem = async ({ body }: Request, res: Response) => {
     try {
-        const responseItem = await insertItem(body)
+        const responseItem = await insertCar(body)
         res.send(responseItem);
     } catch (e) {
         handleHttp(res, "error al crear", e)
@@ -33,10 +34,19 @@ const postItem = async ({ body }: Request, res: Response) => {
 }
 
 const updateItem = (req: Request, res: Response) => {
-
+ 
 }
 
-const deleteItem = (req: Request, res: Response) => {
+const deleteItem = async ({params}: Request, res: Response) => {
+    const { id } = params
+    try {
+        const responseItem = await deleteCar(id)
+        res.send(responseItem);
+    } catch (e) {
+        handleHttp(res, "error al crear", e)
+
+    }
+
 
 }
 
